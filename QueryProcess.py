@@ -35,7 +35,8 @@ class QueryProcess(object):
 		pf.seek(int(offset))
 		posting = pf.readline().split('\t')[1].replace('\n', '').split(',')
 		pset = set()
-		for doc_id in posting:
+		for poster in posting:
+		    doc_id = poster.split(':')[0]
 		    pset.add(doc_id)
 		if flag:
 		    doc_ids.intersection_update(pset)
