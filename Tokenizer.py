@@ -35,7 +35,7 @@ class Tokenizer(object):
 	
 		
 if __name__ == '__main__':
-    token = Tokenizer(Dictionary('lexdb1.dat'))
+    token = Tokenizer(Dictionary('lexdb.dat'))
     reader = Reader('.')
     for (filename, fullpath, filesize, create_time) in reader.txt_files(): 
 	print filename

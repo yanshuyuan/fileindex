@@ -3,15 +3,14 @@ from Posting import *
 
 class IndexBuilder(object):
     def __init__(self):
-	pass	
+	self._merge_id = 0
 
-    def build(self):
-	doc_list = []
-	for filename in os.listdir('.'):
-	    if filename.startswith('.t'):
-		doc_list.append(filename)
+    def build(self, doc_list):
+	if len(doc_list) > 1:
+	    filename = self.merge_sort(doc_list, 0, len(doc_list) - 1)
+	else:
+	    filename = ','.join(doc_list[:])
 	
-	filename = self.merge_sort(doc_list, 0, len(doc_list) - 1)
     	poster = Posting()
 	poster.posting(filename)
 	
@@ -19,16 +18,24 @@ class IndexBuilder(object):
     def merge_sort(self, doc_list, low, high): 
 	if low < high:
 	    mid = (low + high) / 2 
-	    self.merge_sort(doc_list, low, mid)
-	    self.merge_sort(doc_list, mid + 1, high)
-	    return self.merge(doc_list, low, mid, high)
+	    left_filename = self.merge_sort(doc_list, low, mid)
+	    right_filename = self.merge_sort(doc_list, mid + 1, high)
+	    print '----------------------------'
+	    print 'left: ', left_filename
+	    print 'right: ', right_filename
+	    all_filename =  self.merge(doc_list, low, mid, high, left_filename, right_filename)
+	    print 'all: ',all_filename 
+	    print '----------------------------'
+	
+	    return all_filename
+	else:
+	    return ','.join(doc_list[low : high + 1])
 
-    def merge(self, doc_list, low, mid, high):
-	left_filename = ''.join(doc_list[low : mid + 1])
-	right_filename = ''.join(doc_list[mid + 1 : high + 1])
-	all_filename = ''.join(doc_list[low : high + 1])
+    def merge(self, doc_list, low, mid, high, left_filename, right_filename):
 	left_doc = open(left_filename)
 	right_doc = open(right_filename)
+	all_filename = '.tmp%s' % (self._merge_id)
+	self._merge_id += 1
 	f = open(all_filename, 'w')
 	l = left_doc.readline()
 	r = right_doc.readline()
