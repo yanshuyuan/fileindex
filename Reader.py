@@ -19,7 +19,7 @@ class Reader(object):
 
     def txt_files(self):
 	for (filename, fullpath, filesize, create_time) in self.files():
-	    if filename.endswith('.txt'):
+	    if filename.endswith('.txt') or filename.endswith('.TXT'):
 		yield (filename, fullpath, filesize, create_time)
 
     def __file_info(self, root, filename):

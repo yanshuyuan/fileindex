@@ -1,5 +1,6 @@
 from Dictionary import *
 from Reader import *
+import time
 
 class Tokenizer(object):
     def __init__(self, Dict):
@@ -12,25 +13,39 @@ class Tokenizer(object):
 	new_word = ''
 	word = ''
 	
-	for w in fp.read().decode('utf8'):
-	    #print (word + w).encode('utf8')
-	    new_word = word + w
-	    while new_word:
-		#print 'new: ', new_word.encode('utf8')
-	        if not self._word_dict.find(new_word):
-		    if word:
-		        #print 'word: ', word.encode('utf8')
-			if not stream.has_key(word):
-			    stream[word] = 0
-			stream[word] += 1
-		        new_word = w
-			word = ''
-		    else:
-			break
-	        else:
-		    #print 'find: ', new_word.encode('utf8')
-		    word = new_word
-		    break
+	content = fp.read()
+	charsets = ['utf8', 'utf16', 'utf32', 'gb18030', 'gbk', 'gb2312', \
+		    'big5', 'big5hkscs', 'ascii', 'cp037', 'cp437', 'cp950', \
+		    'hz', 'iso2022_jp_2']
+	
+	for charset in charsets:
+	    try:
+	        decode_content = content.decode(charset)
+	    except Exception, e:
+		continue
+	    for w in decode_content:
+	        #print (word + w).encode('utf8')
+	        new_word = word + w
+	        while new_word:
+	    	#print 'new: ', new_word.encode('utf8')
+	            if not self._word_dict.find(new_word):
+	    	        if word:
+	    	            #print 'word: ', word.encode('utf8')
+	    		    if not stream.has_key(word):
+	    		        stream[word] = 0
+	    		    stream[word] += 1
+	    	            new_word = w
+	    		    word = ''
+	    	        else:
+	    		    break
+	            else:
+	    	        #print 'find: ', new_word.encode('utf8')
+	    	        word = new_word
+	    	        break
+	    break
+
+	if not stream:
+	    print 'File: %s unknown code' % filename
 	return stream
 	
 		

@@ -1,9 +1,10 @@
+import time
 class Vocabulary(object):
     def __init__(self):
 	self._voc = {}
 	self._voc_size = 0
 	self._tmp_id = 0
-	self.DEFAULT = 1000
+	self.DEFAULT = 100000
 	self._tmp_filename = []
 
     def reset(self):
