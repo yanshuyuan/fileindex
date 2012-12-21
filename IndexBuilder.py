@@ -20,12 +20,7 @@ class IndexBuilder(object):
 	    mid = (low + high) / 2 
 	    left_filename = self.merge_sort(doc_list, low, mid)
 	    right_filename = self.merge_sort(doc_list, mid + 1, high)
-	    print '----------------------------'
-	    print 'left: ', left_filename
-	    print 'right: ', right_filename
 	    all_filename =  self.merge(doc_list, low, mid, high, left_filename, right_filename)
-	    print 'all: ',all_filename 
-	    print '----------------------------'
 	
 	    return all_filename
 	else:
@@ -68,12 +63,22 @@ class IndexBuilder(object):
 		f.write(r)
 	left_doc.close()
 	right_doc.close()
+	f.flush()
 	f.close()
+	cmd = 'rm %s %s' % (left_filename, right_filename)
+	os.system(cmd)
+	
 	return all_filename
 
 if __name__ == '__main__':
+    doc_list = []
+    for filename in os.listdir('.'):
+	if filename.startswith('.t') and (not filename.startswith('.tmp')):
+	    doc_list.append(filename)
+    print doc_list
+ 
     builder = IndexBuilder()
-    builder.build()
+    builder.build(doc_list)
 	
 		    
 		

@@ -20,5 +20,5 @@ class Document(object):
 	f = open(filename, 'w')
 	for doc_id in self._docs.keys():
 	    (filename, fullpath, fsize, create_time, wsize) = self._docs[doc_id]
-	    f.write('%s %s %s %s %s %s\n' % (doc_id, filename, fullpath, fsize, create_time, wsize))
+	    f.write('%s\t%s\t%s\t%s\t%s\t%s\n' % (doc_id, filename, fullpath, fsize, create_time, wsize))
 	f.close()

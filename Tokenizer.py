@@ -15,8 +15,7 @@ class Tokenizer(object):
 	
 	content = fp.read()
 	charsets = ['utf8', 'utf16', 'utf32', 'gb18030', 'gbk', 'gb2312', \
-		    'big5', 'big5hkscs', 'ascii', 'cp037', 'cp437', 'cp950', \
-		    'hz', 'iso2022_jp_2']
+		    'big5', 'big5hkscs', 'ascii']
 	
 	for charset in charsets:
 	    try:
@@ -43,9 +42,6 @@ class Tokenizer(object):
 	    	        word = new_word
 	    	        break
 	    break
-
-	if not stream:
-	    print 'File: %s unknown code' % filename
 	return stream
 	
 		
