@@ -13,6 +13,7 @@ class IndexBuilder(object):
 	
     	poster = Posting()
 	poster.posting(filename)
+	os.system('rm %s' % filename)
 	
 
     def merge_sort(self, doc_list, low, high): 
